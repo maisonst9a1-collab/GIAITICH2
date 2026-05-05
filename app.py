@@ -2,6 +2,35 @@ import streamlit as st
 import sympy as sp
 import numpy as np
 import plotly.graph_objects as go
+import base64
+
+def get_base64(file):
+    with open(file, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+logo_base64 = get_base64("logo.png")
+
+st.markdown(
+    f"""
+    <style>
+    .logo-container {{
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        z-index: 100;
+    }}
+    .logo-container img {{
+        width: 80px;
+        opacity: 0.8;
+    }}
+    </style>
+
+    <div class="logo-container">
+        <img src="data:image/png;base64,{logo_base64}">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Cấu hình trang
 st.set_page_config(layout="wide", page_title="Khảo sát cực trị")
