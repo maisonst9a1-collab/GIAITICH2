@@ -4,6 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 import base64
 
+st.set_page_config(layout="wide", page_title="Khảo sát cực trị")
 # ==============================
 # NỘI DUNG CHÍNH
 # ==============================
