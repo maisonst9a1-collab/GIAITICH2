@@ -3,42 +3,51 @@ import sympy as sp
 import numpy as np
 import plotly.graph_objects as go
 import base64
+import os
 
-def get_base64(file):
-    with open(file, "rb") as f:
-        return base64.b64encode(f.read()).decode()
-
-logo_base64 = get_base64("logo.png")
-
-st.markdown(
-    f"""
-    <style>
-    .logo-container {{
-        position: fixed;
-        bottom: 10px;
-        left: 10px;
-        z-index: 100;
-    }}
-    .logo-container img {{
-        width: 80px;
-        opacity: 0.8;
-    }}
-    </style>
-
-    <div class="logo-container">
-        <img src="data:image/png;base64,{logo_base64}">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# Cấu hình trang
+# ==============================
+# CONFIG TRANG (để lên trên cùng)
+# ==============================
 st.set_page_config(layout="wide", page_title="Khảo sát cực trị")
 
+# ==============================
+# LOAD LOGO (an toàn 100%)
+# ==============================
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+if os.path.exists("logo.png"):
+    logo_base64 = get_base64("logo.png")
+
+    st.markdown(
+        f"""
+        <style>
+        .logo-container {{
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 999;
+        }}
+        .logo-container img {{
+            width: 80px;
+            opacity: 0.85;
+        }}
+        </style>
+
+        <div class="logo-container">
+            <img src="data:image/png;base64,{logo_base64}">
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.warning("⚠️ Không tìm thấy file logo.png")
+
+# ==============================
+# NỘI DUNG CHÍNH
+# ==============================
 st.title("🔥 Khảo sát cực trị (Gradient & Hessian)")
-
-
-# SIDEBAR - INPUT (BẢNG ĐIỀU KHIỂN BÊN TRÁI)
 
 st.sidebar.header("🎛 Điều chỉnh tham số")
 func_str = st.sidebar.text_input("Nhập hàm f(x,y):", "x^3 + y^3 - 3*x*y")
